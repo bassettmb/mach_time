@@ -12,8 +12,10 @@
 int
 clock_getcpuclockid(pid_t pid, clockid_t *clock_id)
 {
-    if (!pid || pid == getpid())
+    if (!pid || pid == getpid()) {
         *clock_id = CLOCK_PROCESS_CPUTIME_ID | mach_task_self();
+        return 0;
+    }
 
     errno = EINVAL;
     return -1;
