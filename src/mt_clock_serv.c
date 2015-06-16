@@ -1,4 +1,5 @@
-#include "clock_serv_internal.h"
+#include "mt_clock_internal.h"
+#include "mt_clock_serv_internal.h"
 
 #include <mach/clock.h>
 #include <mach/clock_priv.h> /* the priv is for privileged */
@@ -8,7 +9,7 @@
 #include <errno.h>
 
 clock_serv_t
-clock_serv_monotonic(void)
+mt_clock_serv_monotonic(void)
 {
     static clock_serv_t clock = MACH_PORT_NULL;
     static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -34,7 +35,7 @@ clock_serv_monotonic(void)
 }
 
 clock_serv_t
-clock_serv_realtime(void)
+mt_clock_serv_realtime(void)
 {
     static clock_serv_t clock = MACH_PORT_NULL;
     static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -60,7 +61,7 @@ clock_serv_realtime(void)
 }
 
 int
-clock_serv_getres(clock_serv_t serv, struct timespec *res)
+mt_clock_serv_getres(clock_serv_t serv, struct timespec *res)
 {
     clock_res_t nsec;
     mach_msg_type_number_t count;
@@ -78,13 +79,13 @@ clock_serv_getres(clock_serv_t serv, struct timespec *res)
         return -1;
     }
 
-    res->tv_sec = nsec / NSEC_PER_SEC;
-    res->tv_nsec = nsec % NSEC_PER_SEC;
+    res->tv_sec = nsec / MT_NSEC_PER_SEC;
+    res->tv_nsec = nsec % MT_NSEC_PER_SEC;
     return 0;
 }
 
 int
-clock_serv_gettime(clock_serv_t serv, struct timespec *ts)
+mt_clock_serv_gettime(clock_serv_t serv, struct timespec *ts)
 {
     mach_timespec_t mts;
     kern_return_t error = clock_get_time(serv, &mts);
@@ -105,7 +106,7 @@ clock_serv_gettime(clock_serv_t serv, struct timespec *ts)
 }
 
 int
-clock_serv_settime(clock_serv_t serv, const struct timespec *ts)
+mt_clock_serv_settime(clock_serv_t serv, const struct timespec *ts)
 {
     mach_timespec_t mts = { ts->tv_sec, ts->tv_nsec };
 

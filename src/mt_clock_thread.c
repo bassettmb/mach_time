@@ -1,17 +1,18 @@
-#include "clock_thread_internal.h"
+#include "mt_clock_internal.h"
+#include "mt_clock_thread_internal.h"
 #include <mach/thread_act.h>
 #include <errno.h>
 
 int
-clock_thread_getres(mach_port_t thread, struct timespec *ts)
+mt_clock_thread_getres(mach_port_t thread, struct timespec *ts)
 {
     ts->tv_sec = 0;
-    ts->tv_nsec = NSEC_PER_USEC;
+    ts->tv_nsec = MT_NSEC_PER_USEC;
     return 0;
 }
 
 int
-clock_thread_gettime(mach_port_t thread, struct timespec *ts)
+mt_clock_thread_gettime(mach_port_t thread, struct timespec *ts)
 {
     struct thread_basic_info info;
     mach_msg_type_number_t size = sizeof info;
@@ -25,13 +26,13 @@ clock_thread_gettime(mach_port_t thread, struct timespec *ts)
     }
 
     ts->tv_sec = info.user_time.seconds;
-    ts->tv_nsec = info.user_time.microseconds * NSEC_PER_USEC;
+    ts->tv_nsec = info.user_time.microseconds * MT_NSEC_PER_USEC;
 
     return 0;
 }
 
 int
-clock_thread_settime(mach_port_t thread, const struct timespec *ts)
+mt_clock_thread_settime(mach_port_t thread, const struct timespec *ts)
 {
     errno = EINVAL;
     return -1;

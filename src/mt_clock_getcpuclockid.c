@@ -1,4 +1,4 @@
-#include "clock.h"
+#include "mt_clock.h"
 #include <mach/mach_init.h>
 #include <unistd.h>
 #include <errno.h>
@@ -10,10 +10,10 @@
  * do force it to own something.
  */
 int
-clock_getcpuclockid(pid_t pid, clockid_t *clock_id)
+mt_clock_getcpuclockid(pid_t pid, mt_clockid_t *clock_id)
 {
     if (!pid || pid == getpid()) {
-        *clock_id = CLOCK_PROCESS_CPUTIME_ID | mach_task_self();
+        *clock_id = MT_CLOCK_PROCESS_CPUTIME_ID | mach_task_self();
         return 0;
     }
 

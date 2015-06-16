@@ -1,12 +1,14 @@
+version = 0.0.2
+
 srcdir = src
 incdir = include
 objdir = .obj
 depdir = .dep
 
-cflags := $(CFLAGS) -I$(incdir) -fPIC -g -O0 -c -MMD -MF
+cflags := $(CFLAGS) -I$(incdir) -Wall -Wextra \
+			-Wno-unused-parameter -fPIC -g -O0 -c -MMD -MF
 ldflags := $(LDFLAGS) -o
 arflags := rcs
-depflags := -MM -I$(incdir) -o
 
 cc := $(CC)
 ld := $(cc)
@@ -15,16 +17,15 @@ ar := ar
 rm := rm -rf
 mkdir := mkdir -p
 
-raw_src := clock_serv.c clock_task.c clock_thread.c \
-			clock_getres.c clock_gettime.c clock_settime.c \
-			clock_getcpuclockid.c pthread_getcpuclockid.c
+raw_src := mt_clock_serv.c mt_clock_task.c mt_clock_thread.c \
+			mt_clock_getres.c mt_clock_gettime.c mt_clock_settime.c \
+			mt_clock_getcpuclockid.c mt_pthread_getcpuclockid.c
 
 src := $(addprefix $(srcdir)/, $(raw_src))
 obj := $(addprefix $(objdir)/, $(raw_src:%.c=%.o))
 dep := $(wildcard $(depdir)/*)
 
-version = 0.0.1
-target = libmachclock-$(version)
+target = libmachtime-$(version)
 
 
 .PHONY: all static dynamic clean
@@ -53,7 +54,7 @@ $(target).dylib: $(obj)
 	$(dyld) -o $@ $+
 
 $(target).a: $(obj)
-	$(ar) $(arflags) $@ $^
+	$(ar) $(arflags) $@ $+
 
 $(objdir)/%.o: $(srcdir)/%.c
 	$(cc) $(cflags) $(depdir)/$*.d -o $@ $<
