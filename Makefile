@@ -6,10 +6,10 @@ objdir = .obj
 depdir = .dep
 
 cflags := $(CFLAGS) -I$(incdir) -Wall -Wextra \
-			-Wno-unused-parameter -fPIC -g -O0 -c \
-			-DMT_VERSION=\"$(version)\" -MMD -MF
+			-Wno-unused-parameter -fPIC -fvisibility=hidden \
+			-g -O0 -c -DMT_VERSION=\"$(version)\" -MMD -MF
 
-ldflags := $(LDFLAGS) -o
+ldflags := $(LDFLAGS) -fvisibility=hidden -o
 arflags := rcs
 
 cc := $(CC)

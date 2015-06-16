@@ -1,4 +1,5 @@
 #include "mt_clock.h"
+#include "mt_clock_internal.h"
 #include <mach/mach_init.h>
 #include <unistd.h>
 #include <errno.h>
@@ -9,7 +10,7 @@
  * not expected that clockid_t has resource ownership, so we can't reasonably
  * do force it to own something.
  */
-int
+EXPORT int
 mt_clock_getcpuclockid(pid_t pid, mt_clockid_t *clock_id)
 {
     if (!pid || pid == getpid()) {
