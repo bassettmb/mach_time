@@ -6,7 +6,9 @@ objdir = .obj
 depdir = .dep
 
 cflags := $(CFLAGS) -I$(incdir) -Wall -Wextra \
-			-Wno-unused-parameter -fPIC -g -O0 -c -MMD -MF
+			-Wno-unused-parameter -fPIC -g -O0 -c \
+			-DMT_VERSION=\"$(version)\" -MMD -MF
+
 ldflags := $(LDFLAGS) -o
 arflags := rcs
 
@@ -17,7 +19,7 @@ ar := ar
 rm := rm -rf
 mkdir := mkdir -p
 
-raw_src := mt_clock_serv.c mt_clock_task.c mt_clock_thread.c \
+raw_src := mt_version.c mt_clock_serv.c mt_clock_task.c mt_clock_thread.c \
 			mt_clock_getres.c mt_clock_gettime.c mt_clock_settime.c \
 			mt_clock_getcpuclockid.c mt_pthread_getcpuclockid.c
 
