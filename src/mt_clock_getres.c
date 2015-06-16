@@ -5,7 +5,7 @@
 
 #include <errno.h>
 
-EXPORT int
+MT_EXPORT int
 mt_clock_getres(mt_clockid_t clock_id, struct timespec *res)
 {
     if (!res) {

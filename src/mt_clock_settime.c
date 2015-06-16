@@ -5,7 +5,7 @@
 
 #include <errno.h>
 
-EXPORT int
+MT_EXPORT int
 mt_clock_settime(mt_clockid_t clock_id, const struct timespec *ts)
 {
     if (!ts) {

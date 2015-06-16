@@ -3,7 +3,7 @@
 
 #include "mt_clock.h"
 
-#define EXPORT __attribute__((visibility("default")))
+#define MT_EXPORT __attribute__((visibility("default")))
 
 #define MT_NSEC_PER_USEC 1000
 #define MT_NSEC_PER_SEC 1000000000

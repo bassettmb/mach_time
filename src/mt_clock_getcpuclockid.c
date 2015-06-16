@@ -10,7 +10,7 @@
  * not expected that clockid_t has resource ownership, so we can't reasonably
  * do force it to own something.
  */
-EXPORT int
+MT_EXPORT int
 mt_clock_getcpuclockid(pid_t pid, mt_clockid_t *clock_id)
 {
     if (!pid || pid == getpid()) {
