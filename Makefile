@@ -1,4 +1,4 @@
-version = 0.0.3
+version = 0.0.4
 
 srcdir = src
 incdir = include
@@ -19,9 +19,10 @@ ar := ar
 rm := rm -rf
 mkdir := mkdir -p
 
-raw_src := mt_version.c mt_clock_serv.c mt_clock_task.c mt_clock_thread.c \
+raw_src := mt_clock_serv.c mt_clock_task.c mt_clock_thread.c \
 			mt_clock_getres.c mt_clock_gettime.c mt_clock_settime.c \
-			mt_clock_getcpuclockid.c mt_pthread_getcpuclockid.c
+			mt_clock_getcpuclockid.c mt_pthread_getcpuclockid.c \
+			mt_version.c mt_posix.c
 
 src := $(addprefix $(srcdir)/, $(raw_src))
 obj := $(addprefix $(objdir)/, $(raw_src:%.c=%.o))
@@ -29,10 +30,9 @@ dep := $(wildcard $(depdir)/*)
 
 target = libmachtime-$(version)
 
-
 .PHONY: all static dynamic clean
 
-all: $(objdir) $(depdir) static dynamic
+all: $(objdir) $(depdir) dynamic
 
 static: $(target).a
 
